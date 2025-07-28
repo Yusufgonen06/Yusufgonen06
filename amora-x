@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amora‑X Play Love</title>
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #fff; color: #333; }
+    header { background: #d81b60; color: #fff; padding: 1.5rem 1rem; text-align: center; position: sticky; top: 0; z-index: 1000; }
+    header h1 { margin: 0; font-size: 2rem; }
+    header p { margin: 0; font-size: 0.9rem; letter-spacing: 1px; }
+    nav { display: flex; justify-content: space-around; background: #fff; border-bottom: 1px solid #ddd; }
+    nav a { color: #d81b60; padding: 1rem; text-decoration: none; font-weight: 600; }
+    nav a:hover { background: #fce4ec; }
+    .hero { background: #fce4ec; text-align: center; padding: 3rem 1rem; }
+    .hero h2 { font-size: 2rem; color: #d81b60; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding: 2rem; }
+    .product { border: 1px solid #eee; border-radius: 10px; padding: 1rem; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .product img { max-width: 100%; height: auto; border-radius: 6px; }
+    .product h3 { margin-top: 1rem; font-size: 1.2rem; }
+    .product span { font-weight: bold; color: #444; display: block; margin: 0.5rem 0; }
+    .product button { padding: 0.5rem 1rem; border: none; background: #d81b60; color: #fff; border-radius: 4px; cursor: pointer; }
+    .cart-toggle { position: fixed; bottom: 20px; right: 20px; background: #d81b60; color: #fff; padding: 10px 15px; border-radius: 50px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; z-index: 1000; }
+    #cart-modal { display: none; position: fixed; bottom: 70px; right: 20px; width: 300px; background: #fff; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 999; padding: 1rem; max-height: 400px; overflow-y: auto; }
+    #cart-modal h4 { margin-top: 0; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .cart-item button { background: none; border: none; color: red; cursor: pointer; }
+    footer { text-align: center; padding: 2rem 1rem; background: #111; color: #fff; font-size: 0.8rem; margin-top: 3rem; }
+    .btn-group { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .btn-group button, .btn-group a { background: #d81b60; color: white; border: none; padding: 0.6rem; border-radius: 6px; text-align: center; text-decoration: none; }
+    @media screen and (max-width: 480px) {
+      .product h3 { font-size: 1rem; }
+      header h1 { font-size: 1.5rem; }
+      .hero h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>❤️ Amora‑X Play Love ❤️</h1>
+    <p>Aşkı Aşkla Oyna</p>
+  </header>
+
+  <nav>
+    <a href="#">Anasayfa</a>
+    <a href="#urunler">Ürünler</a>
+    <a href="#yorumlar">Yorumlar</a>
+    <a href="#iletisim">İletişim</a>
+  </nav>
+
+  <section class="hero">
+    <h2>Çiftlere Özel Romantik Oyunlar ve Takılar</h2>
+    <p>İlişkinize heyecan ve anlam katacak ürünler sizi bekliyor.</p>
+  </section>
+
+  <section class="products" id="urunler">
+    <div class="product">
+      <img src="Images/ask-tombalasi.jpg" alt="Aşk Tombalası">
+      <h3>Aşk Tombalası</h3>
+      <span>300 TL</span>
+      <button onclick="addToCart('Aşk Tombalası', 300)">Sepete Ekle</button>
+    </div>
+    <div class="product">
+      <img src="Images/urban-warrior.jpg" alt="Urban Warrior">
+      <h3>Urban Warrior (Erkek Takı Kiti)</h3>
+      <span>350 TL</span>
+      <button onclick="addToCart('Urban Warrior', 350)">Sepete Ekle</button>
+    </div>
+    <div class="product">
+      <img src="Images/inner-rediance.jpg" alt="Inner Rediance">
+      <h3>Inner Rediance (Kadın Takı Kiti)</h3>
+      <span>350 TL</span>
+      <button onclick="addToCart('Inner Rediance', 350)">Sepete Ekle</button>
+    </div>
+  </section>
+
+  <div class="cart-toggle" onclick="toggleCart()">🛒 Sepet (<span id="cart-count">0</span>)</div>
+
+  <div id="cart-modal">
+    <h4>Sepet</h4>
+    <div id="cart-items"></div>
+    <p><strong>Toplam:</strong> <span id="total-price">0</span> TL</p>
+    <div class="btn-group">
+      <a href="https://www.shopier.com/" target="_blank">Shopier ile Öde</a>
+      <a href="https://wa.me/905555555555?text=Merhaba,+sipariş+vermek+istiyorum." target="_blank">📦 WhatsApp ile Sipariş</a>
+      <a href="https://wa.me/905555555555?text=Merhaba,+yardım+almak+istiyorum." target="_blank">💬 Yardım</a>
+    </div>
+  </div>
+
+  <section id="yorumlar" style="padding:2rem">
+    <h2 style="text-align:center;color:#d81b60">Kullanıcı Yorumları</h2>
+    <div style="max-width:600px;margin:auto;text-align:center">
+      <p>🌟🌟🌟🌟🌟 "Ürünler çok kaliteli, sevgilim bayıldı!" - Ayşe</p>
+      <p>🌟🌟🌟🌟🌟 "Aşk tombalası çok eğlenceliydi!" - Can</p>
+    </div>
+  </section>
+
+  <footer id="iletisim">
+    <p>&copy; 2025 Amora‑X Play Love. Tüm hakları saklıdır.</p>
+    <p>İletişim: info@amora‑x.com</p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cart-items');
+      const totalPrice = document.getElementById('total-price');
+
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartItems.innerHTML = '';
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = ${item.name} (${item.qty}) <button onclick="removeItem(${index})">🗑</button>;
+        cartItems.appendChild(itemDiv);
+        total += item.price * item.qty;
+      });
+
+      totalPrice.textContent = total;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function toggleCart() {
+      const modal = document.getElementById('cart-modal');
+      modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
